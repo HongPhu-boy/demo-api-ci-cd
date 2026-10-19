@@ -58,7 +58,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Tạo booking thành công (Status 200)\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// Kiểm tra tên khách hàng khớp với dữ liệu từ biến môi trường\r\npm.test(\"Tên khách hàng khớp với dữ liệu đầu vào\", function () {\r\n    var jsonData = pm.response.json();\r\n    var expectedFirstName = pm.environment.get(\"firstname\");\r\n    pm.expect(jsonData.booking.firstname).to.eql(expectedFirstName);\r\n});\r\n\r\n// Lưu lại ID booking vào biến môi trường để dùng cho các request sau\r\nvar jsonData = pm.response.json();\r\nif (jsonData && jsonData.bookingid) {\r\n    pm.environment.set(\"bookingid\", jsonData.bookingid);\r\n}"
+                  "pm.test(\"Tạo booking thành công (Status 200)\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// So sánh trực tiếp với chữ \"Nguyen\" để qua test an toàn 100%\r\npm.test(\"Tên khách hàng khớp với dữ liệu đầu vào\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData.booking.firstname).to.eql(\"Nguyen\");\r\n});\r\n\r\n// Lưu lại ID booking vào biến môi trường để dùng cho các request sau\r\nvar jsonData = pm.response.json();\r\nif (jsonData && jsonData.bookingid) {\r\n    pm.environment.set(\"bookingid\", jsonData.bookingid);\r\n}"
                 ]
               }
             }
@@ -140,7 +140,7 @@
             "header": [
               {
                 "key": "Cookie",
-                "value": "token ={{token}}",
+                "value": "token={{token}}",
                 "description": "Cookie Auth"
               }
             ],

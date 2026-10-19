@@ -1,21 +1,22 @@
-name: Restful-Booker CI Pipeline
+name: Automated API tests using Postman CLI
 
-on: [push, pull_request]
+on:
+  push:
+  workflow_dispatch: # Cho phép bấm chạy thủ công trên GitHub
 
 jobs:
-  api-testing:
+  automated-api-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. Checkout mã nguồn
-        uses: actions/checkout@v4
-
-      - name: 2. Cài đặt Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: 3. Cài đặt công cụ Newman (Postman CLI)
-        run: npm install -g newman
-
-      - name: 4. Chạy bộ Test tự động
-        run: newman run RestfulBooker.postman_collection.json -e RestfulBooker_Env.postman_environment.json
+      - uses: actions/checkout@v4
+      
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+          
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+        
+      - name: Run API tests
+        run: |
+          postman collection run "59055539-e1d0bf3d-c169-455c-8dcd-061a51b4442f"
